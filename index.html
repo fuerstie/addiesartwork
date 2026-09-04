@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AddiesArtWork — Learn to Draw. One Stroke at a Time.</title>
+  <style>
+    :root {
+      --indigo: #5038C8;
+      --indigo-light: #7858E8;
+      --purple: #9060E0;
+      --bg: #0E0A1F;
+      --card: #1A1430;
+      --text: #F0EEF8;
+      --muted: #9890C0;
+      --accent: #FFD700;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      position: sticky;
+      top: 0;
+      background: rgba(14,10,31,0.92);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .nav-logo { font-size: 1.15rem; font-weight: 700; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--indigo-light); }
+    nav ul { list-style: none; display: flex; gap: 32px; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    nav a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 100px 24px 80px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(80,56,200,0.35) 0%, transparent 70%);
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(88,56,200,0.25);
+      border: 1px solid rgba(120,88,232,0.4);
+      color: var(--indigo-light);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 span { color: var(--indigo-light); }
+    .subtitle {
+      font-size: 1.2rem;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 40px;
+    }
+    .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--indigo);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--indigo-light); transform: translateY(-2px); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      padding: 14px 32px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.14); }
+
+    /* APP PREVIEW MOCKUP */
+    .mockup-section {
+      display: flex;
+      justify-content: center;
+      padding: 20px 24px 80px;
+    }
+    .mockup {
+      width: 280px;
+      background: var(--card);
+      border-radius: 48px;
+      border: 6px solid rgba(255,255,255,0.1);
+      overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+    }
+    .mockup-screen {
+      background: linear-gradient(160deg, #1A1430 0%, #0E1828 100%);
+      padding: 32px 20px 24px;
+      min-height: 460px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .mock-title { font-size: 1.3rem; font-weight: 800; color: var(--text); }
+    .mock-streak {
+      background: linear-gradient(135deg, var(--indigo), var(--purple));
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .mock-streak .flame { font-size: 2rem; }
+    .mock-streak .streak-text { font-weight: 700; font-size: 1rem; }
+    .mock-streak .streak-sub { font-size: 0.75rem; opacity: 0.8; }
+    .mock-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .mock-card {
+      background: rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+    .mock-card .icon { font-size: 1.6rem; margin-bottom: 6px; }
+    .mock-card .label { font-size: 0.7rem; font-weight: 600; color: var(--muted); }
+    .mock-card .progress-bar {
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+    .mock-card .progress-fill {
+      height: 100%;
+      background: var(--indigo-light);
+      border-radius: 2px;
+    }
+
+    /* FEATURES */
+    section { padding: 80px 24px; max-width: 1000px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--indigo-light);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 48px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      padding: 28px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover { border-color: rgba(120,88,232,0.4); transform: translateY(-4px); }
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .feature-card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+    /* WHAT'S INCLUDED */
+    .included-section {
+      background: var(--card);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 80px 24px;
+    }
+    .included-inner { max-width: 1000px; margin: 0 auto; }
+    .included-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 40px;
+    }
+    .included-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.95rem;
+    }
+    .check {
+      width: 22px;
+      height: 22px;
+      background: rgba(80,56,200,0.25);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--indigo-light);
+      font-size: 0.75rem;
+      margin-top: 1px;
+    }
+
+    /* CONTACT */
+    .contact-section { text-align: center; padding: 80px 24px; }
+    .contact-box {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 56px 40px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .contact-box h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 12px; }
+    .contact-box p { color: var(--muted); margin-bottom: 32px; }
+    .contact-box a.btn-primary { display: inline-block; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 32px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+    .footer-links { display: flex; gap: 24px; }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      nav ul { gap: 18px; }
+      .hero { padding: 70px 20px 50px; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Addie's<span>ArtWork</span></a>
+  <ul>
+    <li><a href="#features">Features</a></li>
+    <li><a href="privacy.html">Privacy</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="badge">Now on the App Store</div>
+  <h1>Learn to Draw.<br/><span>One Stroke at a Time.</span></h1>
+  <p class="subtitle">A structured drawing trainer with guided lessons, real-time stroke scoring, and photo tracing — for beginners and artists alike.</p>
+  <div class="cta-row">
+    <a href="#" class="btn-primary">Download on the App Store</a>
+    <a href="#features" class="btn-secondary">See what's inside</a>
+  </div>
+</section>
+
+<div class="mockup-section">
+  <div class="mockup">
+    <div class="mockup-screen">
+      <div class="mock-title">Addie's ArtWork</div>
+      <div class="mock-streak">
+        <div class="flame">🔥</div>
+        <div>
+          <div class="streak-text">7-day streak</div>
+          <div class="streak-sub">Best: 12 · XP: 840</div>
+        </div>
+      </div>
+      <div style="font-size:0.75rem;font-weight:700;color:var(--muted);margin-top:4px;">COURSES</div>
+      <div class="mock-cards">
+        <div class="mock-card">
+          <div class="icon">✏️</div>
+          <div class="label">Fundamentals</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+        </div>
+        <div class="mock-card">
+          <div class="icon">⬡</div>
+          <div class="label">Shapes</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+        </div>
+        <div class="mock-card">
+          <div class="icon">〜</div>
+          <div class="label">Lines & Curves</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:25%"></div></div>
+        </div>
+        <div class="mock-card">
+          <div class="icon">🌑</div>
+          <div class="label">Shading</div>
+          <div class="progress-bar"><div class="progress-fill" style="width:10%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="features">
+  <p class="section-label">Features</p>
+  <h2 class="section-title">Everything you need to grow as an artist.</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">🎓</span>
+      <h3>60 Structured Lessons</h3>
+      <p>Five courses from Fundamentals to Sketching, each broken into short achievable steps. Learn at your own pace — every lesson unlocks the next.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🎯</span>
+      <h3>Real-Time Stroke Scoring</h3>
+      <p>Every stroke is measured for path accuracy and line confidence. A 0–100 score tells you exactly how close you are and where to improve.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🖼️</span>
+      <h3>Illustrated Subject Gallery</h3>
+      <p>17 subjects across 7 categories — Anime, Animals, Food, Vehicles, Nature, Portraits, Architecture. Step-by-step reveal or full freehand tracing mode.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">📸</span>
+      <h3>Photo Tracing</h3>
+      <p>Import any photo from your library and draw over it. Adjust opacity, toggle the reference on and off, and save your finished piece back to Photos.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔥</span>
+      <h3>Daily Streaks & XP</h3>
+      <p>Build a daily drawing habit with streak tracking, XP scoring, and a 7-day practice calendar. Progress is saved per lesson and per subject.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">✏️</span>
+      <h3>Apple Pencil Ready</h3>
+      <p>Designed for natural pressure-sensitive drawing on iPad with Apple Pencil. Finger drawing on iPhone works great too.</p>
+    </div>
+  </div>
+</section>
+
+<div class="included-section">
+  <div class="included-inner">
+    <p class="section-label">What's Included</p>
+    <h2 class="section-title">No subscriptions. No ads. Everything unlocked.</h2>
+    <div class="included-list">
+      <div class="included-item"><div class="check">✓</div><span>60 lessons across 5 structured courses</span></div>
+      <div class="included-item"><div class="check">✓</div><span>17 illustrated drawing subjects</span></div>
+      <div class="included-item"><div class="check">✓</div><span>7 subject categories</span></div>
+      <div class="included-item"><div class="check">✓</div><span>Step-by-step guided drawing mode</span></div>
+      <div class="included-item"><div class="check">✓</div><span>Full image freehand tracing mode</span></div>
+      <div class="included-item"><div class="check">✓</div><span>Real-time accuracy + smoothness scoring</span></div>
+      <div class="included-item"><div class="check">✓</div><span>Photo import with opacity tracing overlay</span></div>
+      <div class="included-item"><div class="check">✓</div><span>Daily streak & XP progress system</span></div>
+      <div class="included-item"><div class="check">✓</div><span>Save drawings to your Photos library</span></div>
+      <div class="included-item"><div class="check">✓</div><span>Apple Pencil support</span></div>
+      <div class="included-item"><div class="check">✓</div><span>Works on iPhone and iPad</span></div>
+      <div class="included-item"><div class="check">✓</div><span>No ads. No subscriptions. Ever.</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="contact" class="contact-section">
+  <div class="contact-box">
+    <h2>Questions or Issues?</h2>
+    <p>Found a bug, have a feature request, or just want to say hi? Send us a message and we'll get back to you as soon as possible.</p>
+    <a href="mailto:support@addiesartwork.app" class="btn-primary">Contact Support</a>
+  </div>
+</div>
+
+<footer>
+  <span>© 2025 AddiesArtWork. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="mailto:support@addiesartwork.app">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
